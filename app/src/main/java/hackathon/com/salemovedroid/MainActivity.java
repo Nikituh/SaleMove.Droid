@@ -11,6 +11,8 @@ import java.util.List;
 
 import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
         Networking.setToken(token);
 
-        List<Operator> operators = networking.getOperators();
-        System.out.print(operators);
+        networking.getOperators(new Function1<List<Operator>, Unit>() {
+            @Override
+            public Unit invoke(List<Operator> operators) {
+                return null;
+            }
+        });
     }
 
     public String readFromAssets(String filename) throws IOException {
