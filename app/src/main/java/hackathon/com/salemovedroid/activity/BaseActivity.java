@@ -8,10 +8,6 @@ import java.util.logging.Logger;
 /**
  * Created by John on 9/29/2017.
  */
-
-
-
-
 public class BaseActivity extends AppCompatActivity {
     protected Logger log = Logger.getLogger(BaseActivity.class.getName());
 
