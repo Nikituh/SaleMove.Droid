@@ -1,12 +1,11 @@
 package hackathon.com.salemovedroid;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.List;
 
 import hackathon.com.salemovedroid.model.Operator;
@@ -33,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         List<Operator> operators = networking.getOperators();
         System.out.print(operators);
+
+        networking.getEngagement();
     }
 
     public String readFromAssets(String filename) throws IOException {

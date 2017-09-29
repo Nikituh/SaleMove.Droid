@@ -53,6 +53,48 @@ class Networking {
         return operators
     }
 
+    fun getEngagement() {
+
+        val headers = getHeaders()
+        headers["Content-Type"] = "application/json"
+        FuelManager.instance.baseHeaders = headers
+
+        var request = Request()
+        request.url = URL(base_url + "engagement_requests")
+        request.httpMethod = Method.POST
+        var body = "{" +
+                "\"media\": \"text\"," +
+                "\"operator_id\": \"40531de4-79a1-43de-940f-4aed74aa9e7b\"," +
+                "\"new_site_visitor\": {" +
+                "\"site_id\": \"" + site_id + "\"," +
+                "\"name\": \"Vincent Vega\"" +
+                "}," +
+                "\"webhooks\":[" +
+                "{" +
+                "\"url\": \"https://requestb.in/ydudinyd\"," +
+                "\"method\": \"POST\"," +
+                "\"events\": [" +
+                "\"engagement.start\"," +
+                "\"engagement.end\"," +
+                "\"engagement.request.failure\"," +
+                "\"engagement.chat.message\"" +
+                "]" +
+                "}" +
+                "]" +
+                "}"
+        request.body(body)
+
+        Fuel.request(request).responseJson { _, _, result ->
+            result.fold(success = { json ->
+                val string = json.obj().toString()
+                Log.d("engagement success", string)
+            }, failure = { error ->
+                Log.e("engagement error", error.toString())
+            })
+        }
+
+    }
+
     private fun getHeaders() : MutableMap<String, String> {
 
         return mutableMapOf(
