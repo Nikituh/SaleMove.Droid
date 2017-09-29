@@ -1,4 +1,4 @@
-package hackathon.com.salemovedroid
+package hackathon.com.salemovedroid.networking
 
 /**
  * Created by aareundo on 29/09/2017.
