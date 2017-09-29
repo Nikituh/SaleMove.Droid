@@ -6,10 +6,8 @@ package hackathon.com.salemovedroid.model
 class Operator {
 
     var name = ""
-
     var phone = ""
-
     var email = ""
-
+    var imageUrl = "";
     var available = false
 }

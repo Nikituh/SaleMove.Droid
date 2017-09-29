@@ -29,6 +29,13 @@ class Codec {
             result.phone = json["phone"] as String
             result.available = json["available"] as Boolean
 
+            try {
+                val picture = json["picture"] as JSONObject
+                result.imageUrl = picture["url"] as String  
+            } catch (e: Exception) {
+
+            }
+
             return result
         }
     }
