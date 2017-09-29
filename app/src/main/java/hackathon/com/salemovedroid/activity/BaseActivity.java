@@ -11,7 +11,8 @@ import hackathon.com.salemovedroid.R;
  * Created by John on 9/29/2017.
  */
 public class BaseActivity extends AppCompatActivity {
-    protected Logger log = Logger.getLogger(BaseActivity.class.getName());
+    static final String TAG = BaseActivity.class.getName();
+    protected Logger log = Logger.getLogger(TAG);
 
     @Override
     protected void onStart() {
@@ -22,6 +23,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
     }
+
     protected Toolbar getToolbar() {
         return (Toolbar) findViewById(R.id.main_toolbar);
     }
@@ -39,7 +41,7 @@ public class BaseActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         if (enableUpNavigation) {
-            toolbar.setNavigationIcon(R.drawable.ic_action_name );
+            toolbar.setNavigationIcon(R.drawable.ic_action_name);
         }
     }
 }
