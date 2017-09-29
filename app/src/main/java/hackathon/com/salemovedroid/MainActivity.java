@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 
+import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         Networking.setToken(token);
 
-        networking.getOperators();
+        List<Operator> operators = networking.getOperators();
+        System.out.print(operators);
     }
 
     public String readFromAssets(String filename) throws IOException {

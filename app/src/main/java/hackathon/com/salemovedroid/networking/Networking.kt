@@ -6,6 +6,8 @@ import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Request
+import hackathon.com.salemovedroid.model.Operator
+import org.json.JSONArray
 import java.net.URL
 
 /**
@@ -26,22 +28,29 @@ class Networking {
     private val base_url = "https://api.beta.salemove.com/"
     private val operator_url = base_url + "operators?site_ids[]=$site_id&include_offline=false"
 
-    fun getOperators() {
+    fun getOperators(): MutableList<Operator>? {
 
         FuelManager.instance.baseHeaders = getHeaders()
 
         var request = Request()
         request.url = URL(operator_url)
         request.httpMethod = Method.GET
-        
+
+        var operators = mutableListOf<Operator>()
+
         Fuel.request(request).responseJson { _, _, result ->
             result.fold(success = { json ->
-                val string = json.obj().toString()
-                Log.d("qdp success", string)
+
+                var operator_json = json.obj()["operators"] as JSONArray
+                operators = Codec.parseOperators(operator_json)
+
             }, failure = { error ->
                 Log.e("qdp error", error.toString())
+
             })
         }
+
+        return operators
     }
 
     private fun getHeaders() : MutableMap<String, String> {
