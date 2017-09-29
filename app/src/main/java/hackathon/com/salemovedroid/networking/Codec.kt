@@ -31,7 +31,7 @@ class Codec {
 
             try {
                 val picture = json["picture"] as JSONObject
-                result.imageUrl = picture["url"] as String  
+                result.imageUrl = picture["url"] as String
             } catch (e: Exception) {
 
             }

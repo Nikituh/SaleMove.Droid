@@ -22,7 +22,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         networking = new Networking();
+        setToken();
 
+        networking.getOperators(new Function1<List<Operator>, Unit>() {
+            @Override
+            public Unit invoke(List<Operator> operators) {
+                return null;
+            }
+        });
+    }
+
+    public void setToken() {
         String token = "";
         try {
             token = readFromAssets("token.txt");
@@ -31,13 +41,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Networking.setToken(token);
-
-        networking.getOperators(new Function1<List<Operator>, Unit>() {
-            @Override
-            public Unit invoke(List<Operator> operators) {
-                return null;
-            }
-        });
     }
 
     public String readFromAssets(String filename) throws IOException {
