@@ -1,14 +1,17 @@
 package hackathon.com.salemovedroid;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.List;
 
+import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +22,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         networking = new Networking();
+        setToken();
 
+        networking.getOperators(new Function1<List<Operator>, Unit>() {
+            @Override
+            public Unit invoke(List<Operator> operators) {
+                return null;
+            }
+        });
+    }
+
+    public void setToken() {
         String token = "";
         try {
             token = readFromAssets("token.txt");
@@ -28,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Networking.setToken(token);
-
-        networking.getOperators();
     }
 
     public String readFromAssets(String filename) throws IOException {

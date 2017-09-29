@@ -6,6 +6,9 @@ import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Request
+import hackathon.com.salemovedroid.model.Operator
+import org.jetbrains.anko.doAsync
+import org.json.JSONArray
 import java.net.URL
 
 /**
@@ -26,22 +29,69 @@ class Networking {
     private val base_url = "https://api.beta.salemove.com/"
     private val operator_url = base_url + "operators?site_ids[]=$site_id&include_offline=false"
 
-    fun getOperators() {
+    fun getOperators(callback: (list: MutableList<Operator>) -> Unit) {
 
         FuelManager.instance.baseHeaders = getHeaders()
 
         var request = Request()
         request.url = URL(operator_url)
         request.httpMethod = Method.GET
-        
+
+        Fuel.request(request).responseJson { _, _, result ->
+            result.fold(success = { json ->
+
+                var operator_json = json.obj()["operators"] as JSONArray
+                val operators = Codec.parseOperators(operator_json)
+                callback(operators)
+
+            }, failure = { error ->
+                Log.e("qdp error", error.toString())
+
+            })
+
+        }
+    }
+
+    fun getEngagement() {
+
+        val headers = getHeaders()
+        headers["Content-Type"] = "application/json"
+        FuelManager.instance.baseHeaders = headers
+
+        var request = Request()
+        request.url = URL(base_url + "engagement_requests")
+        request.httpMethod = Method.POST
+        var body = "{" +
+                "\"media\": \"text\"," +
+                "\"operator_id\": \"40531de4-79a1-43de-940f-4aed74aa9e7b\"," +
+                "\"new_site_visitor\": {" +
+                "\"site_id\": \"" + site_id + "\"," +
+                "\"name\": \"Vincent Vega\"" +
+                "}," +
+                "\"webhooks\":[" +
+                "{" +
+                "\"url\": \"https://requestb.in/ydudinyd\"," +
+                "\"method\": \"POST\"," +
+                "\"events\": [" +
+                "\"engagement.start\"," +
+                "\"engagement.end\"," +
+                "\"engagement.request.failure\"," +
+                "\"engagement.chat.message\"" +
+                "]" +
+                "}" +
+                "]" +
+                "}"
+        request.body(body)
+
         Fuel.request(request).responseJson { _, _, result ->
             result.fold(success = { json ->
                 val string = json.obj().toString()
-                Log.d("qdp success", string)
+                Log.d("engagement success", string)
             }, failure = { error ->
-                Log.e("qdp error", error.toString())
+                Log.e("engagement error", error.toString())
             })
         }
+
     }
 
     private fun getHeaders() : MutableMap<String, String> {
