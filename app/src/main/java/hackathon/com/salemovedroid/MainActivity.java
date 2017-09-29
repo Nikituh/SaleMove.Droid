@@ -12,6 +12,7 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import hackathon.com.salemovedroid.model.Operator;
@@ -23,9 +24,34 @@ public class MainActivity extends AppCompatActivity {
 
     private Networking networking;
 
+    public static final int REQUEST_CALL_PERMISSION = 1;
+    public static final int REQUEST_CALLING = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
+        } else {
+            onPermissionsGranted();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CALL_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    onPermissionsGranted();
+                }
+            }
+        }
+    }
+
+    private void onPermissionsGranted() {
 
         networking = new Networking();
         setToken();
@@ -35,27 +61,19 @@ public class MainActivity extends AppCompatActivity {
             public Unit invoke(List<Operator> operators) {
                 String phone = operators.get(0).getPhone();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null));
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    Log.i("no call permision", "no call permision");
-                    return null;
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    startActivityForResult(intent, REQUEST_CALLING);
                 }
-                startActivityForResult(intent, 1);
                 return null;
             }
         });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == 1) {
+        if (requestCode == REQUEST_CALLING) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 Log.i("OK", "ok");
