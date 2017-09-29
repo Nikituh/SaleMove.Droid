@@ -7,7 +7,6 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Request
 import hackathon.com.salemovedroid.model.Operator
-import org.jetbrains.anko.doAsync
 import org.json.JSONArray
 import java.net.URL
 
