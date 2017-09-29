@@ -1,6 +1,5 @@
 package hackathon.com.salemovedroid;
 
-import android.os.NetworkOnMainThreadException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         Networking.setToken(token);
 
-        networking.doStuff();
+        networking.getOperators();
     }
 
     public String readFromAssets(String filename) throws IOException {
