@@ -8,7 +8,7 @@ class Networking {
     /**
      * WebRCT: https://webrtc.org/native-code/android/
      */
-    
+
     fun doStuff() {
 
     }
