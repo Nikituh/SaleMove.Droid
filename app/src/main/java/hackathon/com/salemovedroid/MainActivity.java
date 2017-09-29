@@ -6,6 +6,7 @@ import android.os.Bundle;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import hackathon.com.salemovedroid.networking.Networking;
 

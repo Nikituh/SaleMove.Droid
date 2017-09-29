@@ -33,7 +33,7 @@ class Networking {
         var request = Request()
         request.url = URL(operator_url)
         request.httpMethod = Method.GET
-
+        
         Fuel.request(request).responseJson { _, _, result ->
             result.fold(success = { json ->
                 val string = json.obj().toString()
