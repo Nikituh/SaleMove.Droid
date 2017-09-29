@@ -5,9 +5,13 @@ import android.os.Bundle;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import hackathon.com.salemovedroid.R;
+import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /**
  * Created by John on 9/29/2017.
@@ -15,6 +19,7 @@ import hackathon.com.salemovedroid.networking.Networking;
 
 public class OperatorsActivity extends BaseActivity {
     private Networking networking;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +36,14 @@ public class OperatorsActivity extends BaseActivity {
 
         Networking.setToken(token);
 
-        networking.getOperators();
-        
-    }
+        networking.getOperators(new Function1<List<Operator>, Unit>() {
+            @Override
+            public Unit invoke(List<Operator> operators) {
+                return null;
+            }
+        });
 
+    }
     public String readFromAssets(String filename) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open(filename)));
 
