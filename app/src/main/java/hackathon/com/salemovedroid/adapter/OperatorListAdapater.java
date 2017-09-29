@@ -5,37 +5,49 @@ package hackathon.com.salemovedroid.adapter;
  */
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.SimpleAdapter;
 
 import java.util.List;
-import java.util.Map;
 
+import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.model.Operator;
 
 
-public class OperatorListAdapater extends SimpleAdapter {
+public class OperatorListAdapater extends BaseAdapter  {
 
-    List<Operator> operatorList;
+    private final Context context;
+    private LayoutInflater inflater;
+    List<Operator> operators;
 
-    public OperatorListAdapater(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
-        super(context, data, resource, from, to);
+    public OperatorListAdapater(Context context,List<Operator> operators) {
+        this.operators = operators;
+        this.context=context;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return operatorList.size();
+        return operators.size();
     }
 
     @Override
     public Operator getItem(int idx) {
-        return operatorList.get(idx);
+        return operators.get(idx);
+    }
+
+    @Override
+    public long getItemId(int pos) {
+        return pos;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        return super.getView(position, view, parent);
+        View rowView = inflater.inflate(R.layout.layout_operatorlist, parent, false);
+        return rowView;
     }
+
+
 }

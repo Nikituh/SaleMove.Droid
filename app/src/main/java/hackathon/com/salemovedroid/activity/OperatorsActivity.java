@@ -44,7 +44,7 @@ public class OperatorsActivity extends BaseActivity {
         }
        //startCall();
     }
-
+    //TODO:Move startcall into the adapter onClick logic
     private void startCall() {
         networking.getOperators(new Function1<List<Operator>, Unit>() {
             @Override
@@ -60,10 +60,10 @@ public class OperatorsActivity extends BaseActivity {
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
                     Log.i(TAG, "no call permision");
-                    return null;
+                    return Unit.INSTANCE;
                 }
                 startActivityForResult(intent, 1);
-                return null;
+                return Unit.INSTANCE;
             }
         });
     }
