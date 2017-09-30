@@ -21,7 +21,9 @@ Sounds great, right? Wrong. SaleMove's audio and video features require the use 
 
 That's still fine: so we created a WebView, loaded the site from the url, thinking everything would be great, but the chat button wouldn't appear. What!?
 
-After some debugging, as it turns out, Android WebViews didn't even support sockets until v4.4 (KitKat), but we had newer operation systems, so everything should have been fine. But no. It didn't give any errors, just didn't open the Websocket connection. I have no idea why. Fun fact: the only reason I could debug the application and find out everything is fine **is because I'm using the newer, Chromium-based WebView**. Else I would've been pulling my hair out by now.
+After some debugging, as it turns out, Android WebViews didn't even support sockets until v4.4 (KitKat), but we had newer operation systems, so everything should have been fine. But no. It didn't give any errors, just didn't open the Websocket connection. I have no idea why. 
+
+Fun fact: the only reason I could debug the application and find out everything is fine **is because I'm using the newer, Chromium-based WebView**, else I would've been pulling my hair out by now.
 
 So the final, worst, solution would be to implement a hack that opens the Chrome app from our App without asking the user for confirmation, so it would, at least somewhat, look like the user was still in the application.
 
