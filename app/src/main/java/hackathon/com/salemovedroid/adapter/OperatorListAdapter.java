@@ -37,45 +37,47 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
     @Override
     public OperatorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.include_operator_card, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.include_operator_card, parent, false);
         return new OperatorViewHolder(itemView);
     }
 
     @Override
 
     public void onBindViewHolder(OperatorViewHolder holder, int position) {
-        holder.opName.setText(operators.get(position).getName());
+
         boolean status = operators.get(position).getStatus();
+
+        holder.opName.setText(operators.get(position).getName());
         holder.opStatus.setText(String.valueOf(status));
         holder.opPhone.setText(operators.get(position).getPhone());
         holder.opPhoto.setImageDrawable(context.getDrawable(R.drawable.ic_action_name));
 
-
-        if(status){
+        if (status) {
             holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_available));
+        } else {
+            holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));
         }
-        else{
-            double rnd=Math.random();
-            if(rnd>0.5){holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));}
-            else{holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_on_call));}
-
-        }
-       //TODO:onclickListener
-
+  
     }
+
     @Override
     public int getItemCount() {
         return operators.size();
     }
 
     public static class OperatorViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.operator_card_view) CardView cv;
-        @BindView(R.id.person_name_val) TextView opName;
-        @BindView(R.id.person_phone_val) TextView opPhone;
-        @BindView(R.id.person_status_val) TextView opStatus;
-        @BindView(R.id.person_photo) ImageView opPhoto;
-        @BindView(R.id.status_icon) ImageView opStatusIcon;
+        @BindView(R.id.operator_card_view)
+        CardView cv;
+        @BindView(R.id.person_name_val)
+        TextView opName;
+        @BindView(R.id.person_phone_val)
+        TextView opPhone;
+        @BindView(R.id.person_status_val)
+        TextView opStatus;
+        @BindView(R.id.person_photo)
+        ImageView opPhoto;
+        @BindView(R.id.status_icon)
+        ImageView opStatusIcon;
 
         OperatorViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +87,6 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         @OnClick(R.id.operator_card_view)
         public void loadOperatorView(CardView card) {
             card.getRadius();
-                    }
+        }
     }
 }
