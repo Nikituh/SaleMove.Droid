@@ -3,18 +3,17 @@ package hackathon.com.salemovedroid.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
-import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.adapter.OperatorListAdapter;
 import hackathon.com.salemovedroid.model.Operator;
@@ -35,6 +34,9 @@ public class OperatorsActivity extends BaseActivity {
     private Networking networking;
     public Socket socket;
 
+    public static final int REQUEST_CALL_PERMISSION = 1;
+    public static final int REQUEST_CALLING = 2;
+
     private List<Operator> operators;
     private RecyclerView rv;
 
@@ -44,6 +46,15 @@ public class OperatorsActivity extends BaseActivity {
 
         setContentView(R.layout.layout_recycler_view);
         setupToolbar(getString(R.string.app_name));
+
+        if (ActivityCompat.checkSelfPermission(OperatorsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(OperatorsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
+        } else {
+            onPermissionsGranted();
+        }
+    }
+
+    private void onPermissionsGranted() {
 
         networking = new Networking();
         socket = new Socket();
@@ -68,6 +79,7 @@ public class OperatorsActivity extends BaseActivity {
         getOperators();
 
         socket.connect();
+
     }
 
     private void getOperators() {
@@ -81,32 +93,26 @@ public class OperatorsActivity extends BaseActivity {
         });
     }
 
-    // TODO: Move startcall into the adapter onClick logic
-    void startCall(String phone) {
-
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null));
-
-        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Log.i(TAG, "no call permission");
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CALL_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    onPermissionsGranted();
+                }
+            }
         }
-        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == 1) {
+        if (requestCode == REQUEST_CALLING) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                Log.i(TAG, "ok");
+                Log.i("OK", "ok");
             }
         }
     }
