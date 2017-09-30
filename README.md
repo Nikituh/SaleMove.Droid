@@ -27,6 +27,11 @@ So the final, worst, solution would be to implement a hack that opens the Chrome
 
 And here we are: an application featuring a list where each item has two buttons: one to close the app and start a phone call with a SaleMove operator, and another to open Chrome that goes on a website where SaleMove SDK is implemented, but only with text-based chat. **>:(**
 
+### Components
+
+* Android application using http requests to retrieve data from SaleMove
+* Web application implementing SaleMove SDK
+
 
 ### Libraries and tools used
 
