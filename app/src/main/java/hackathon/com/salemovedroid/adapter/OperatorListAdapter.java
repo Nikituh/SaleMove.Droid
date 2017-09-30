@@ -4,7 +4,12 @@ package hackathon.com.salemovedroid.adapter;
  * Created by John on 9/30/2017.
  */
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -81,19 +86,29 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         ImageView opPhoto;
         @BindView(R.id.chat_icon)
         ImageView chatIcon;
+        public Context context;
 
         OperatorViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public Context context;
-        @OnClick(R.id.operator_card_view)
-        public void loadOperatorView(CardView card) {
-            card.getRadius();
 
-            OperatorsActivity activity = (OperatorsActivity)context;
+        @OnClick(R.id.chat_icon)
+        public void loadOperatorView(ImageView card) {
+            OperatorsActivity activity = (OperatorsActivity) context;
             activity.startWebActivity();
+        }
+
+        //TODO:ON CALL
+        @OnClick(R.id.call_icon)
+        public void startAcall(ImageView card) {
+            String phone = opPhone.getText().toString();
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null));
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                context.startActivity(intent);
+            }
+
         }
     }
 }
