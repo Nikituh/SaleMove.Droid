@@ -10,15 +10,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import butterknife.ButterKnife;
 import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.adapter.OperatorListAdapter;
 import hackathon.com.salemovedroid.model.Operator;

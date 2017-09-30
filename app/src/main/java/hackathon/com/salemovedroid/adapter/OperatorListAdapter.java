@@ -61,17 +61,13 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
             else{holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_on_call));}
 
         }
-
-
-        //TODO:onclickListener
+       //TODO:onclickListener
 
     }
-
     @Override
     public int getItemCount() {
         return operators.size();
     }
-
 
     public static class OperatorViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.operator_card_view) CardView cv;
