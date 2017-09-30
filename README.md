@@ -11,6 +11,20 @@ Build an interactive user interface in Android, implementing Salemove's API, whi
 
 ... and all that utilizing both Kotlin and Java (because why the hell wouldn't we want to make our lives even more difficult), because Java was common ground for us, but Kotlin is fun.
 
+## Some Useful Tools: 
+
+http://square.github.io/picasso/
+-A powerful image downloading and caching library for Android
+
+http://jakewharton.github.io/butterknife/
+-Annotate fields with @BindView and a view ID for Butter Knife to find and automatically cast the corresponding view in your layout.
+
+https://socket.io/
+-Socket.IO enables real-time bidirectional event-based communication.
+
+https://github.com/kittinunf/Fuel
+-The easiest HTTP networking library for Kotlin/Android
+
 ### Process
 
 Soon after we had started, it became apparent that SaleMove does not have a public API for their WebSocket solution, so for a while I tried to decode the crypic messages to write a solution from scratch, using an Android implementation of Socket.IO. But all that backfired in a tremendous way when by the end of Friday I still had no idea what the hell was going on. It was an ambitious task, and I admit defeat.
