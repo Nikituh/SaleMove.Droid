@@ -74,6 +74,7 @@
         android:layout_margin="10dp"
         android:layout_weight="0.5"
         android:gravity="end"
+        android:tint="#000000"
         android:src="@drawable/ic_action_name" />
 
     <ImageView
