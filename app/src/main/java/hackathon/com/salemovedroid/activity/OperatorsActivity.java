@@ -33,7 +33,7 @@ public class OperatorsActivity extends BaseActivity {
     static final String TAG = OperatorsActivity.class.getName();
 
     private Networking networking;
-    private Socket socket;
+    public Socket socket;
 
     private List<Operator> operators;
     private RecyclerView rv;
@@ -109,5 +109,10 @@ public class OperatorsActivity extends BaseActivity {
                 Log.i(TAG, "ok");
             }
         }
+    }
+
+    public void startWebActivity() {
+        Intent intent = new Intent(this, WebActivity.class);
+        startActivity(intent);
     }
 }

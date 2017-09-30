@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hackathon.com.salemovedroid.R;
+import hackathon.com.salemovedroid.activity.OperatorsActivity;
 import hackathon.com.salemovedroid.model.Operator;
 
 
@@ -58,6 +59,8 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         } else {
             Picasso.with(context).load(imageUrl).into(holder.opPhoto);
         }
+        holder.context = context;
+
         if (status) {
             holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_available));
         } else {
@@ -89,9 +92,13 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
             ButterKnife.bind(this, itemView);
         }
 
+        public Context context;
         @OnClick(R.id.operator_card_view)
         public void loadOperatorView(CardView card) {
             card.getRadius();
+
+            OperatorsActivity activity = (OperatorsActivity)context;
+            activity.startWebActivity();
         }
     }
 }
