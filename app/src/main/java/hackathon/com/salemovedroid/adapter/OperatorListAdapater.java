@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.model.Operator;
 
@@ -71,22 +73,16 @@ public class OperatorListAdapater extends RecyclerView.Adapter<OperatorListAdapa
 
 
     public static class OperatorViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView opName;
-        //TextView opEmail;
-        TextView opPhone;
-        TextView opStatus;
-        ImageView opPhoto;
-        ImageView opStatusIcon;
+        @BindView(R.id.operator_card_view) CardView cv;
+        @BindView(R.id.person_name_val) TextView opName;
+        @BindView(R.id.person_phone_val) TextView opPhone;
+        @BindView(R.id.person_status_val) TextView opStatus;
+        @BindView(R.id.person_photo) ImageView opPhoto;
+        @BindView(R.id.status_icon) ImageView opStatusIcon;
 
         OperatorViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.operator_card_view);
-            opName = (TextView) itemView.findViewById(R.id.person_name_val);
-            opPhone = (TextView) itemView.findViewById(R.id.person_phone_val);
-            opPhoto = (ImageView) itemView.findViewById(R.id.person_photo);
-            opStatusIcon = (ImageView) itemView.findViewById(R.id.status_icon);
-            opStatus = (TextView) itemView.findViewById(R.id.person_status_val);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
