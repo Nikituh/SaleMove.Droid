@@ -6,7 +6,14 @@
             <solid android:color="@color/colorPrimaryPressed" />
         </shape>
     </item>
-    <item>
+
+    <item android:state_pressed="true"  android:state_focused="true">
+        <shape>
+            <solid android:color="@color/colorPrimaryPressedFocused" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="false">
         <shape>
             <solid android:color="@android:color/transparent" />
         </shape>
