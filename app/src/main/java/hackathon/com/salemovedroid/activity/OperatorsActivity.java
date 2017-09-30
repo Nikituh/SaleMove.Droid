@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import butterknife.ButterKnife;
 import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.adapter.OperatorListAdapater;
 import hackathon.com.salemovedroid.model.MockOperator;

@@ -5,5 +5,6 @@
     <color name="colorAccent">#849A9F</color>
     <color name="smcolor2">#A1C0D0</color>
     <color name="smcolor3">#535D62</color>
+    <color name="colorPrimaryPressed">#50a1c0d0</color>
 
 </resources>
