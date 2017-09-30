@@ -6,5 +6,6 @@
     <color name="smcolor2">#A1C0D0</color>
     <color name="smcolor3">#535D62</color>
     <color name="colorPrimaryPressed">#50a1c0d0</color>
+    <color name="colorPrimaryPressedFocused">#69c6dae4</color>
 
 </resources>
