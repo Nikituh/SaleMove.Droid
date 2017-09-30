@@ -47,11 +47,10 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
     @Override
 
     public void onBindViewHolder(OperatorViewHolder holder, int position) {
-
+        //TODO:Is the operator availabel?
         boolean status = operators.get(position).getStatus();
 
         holder.opName.setText(operators.get(position).getName());
-        holder.opStatus.setText(String.valueOf(status));
         holder.opPhone.setText(operators.get(position).getPhone());
         String imageUrl = operators.get(position).getImageUrl();
         if (imageUrl.isEmpty()) {
@@ -60,12 +59,8 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
             Picasso.with(context).load(imageUrl).into(holder.opPhoto);
         }
         holder.context = context;
-
-        if (status) {
-            holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_available));
-        } else {
-            holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));
-        }
+        holder.callIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_available));
+        holder.chatIcon.setImageDrawable(context.getDrawable(R.drawable.ic_chat_icon));
     }
 
     @Override
@@ -80,12 +75,12 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         TextView opName;
         @BindView(R.id.person_phone_val)
         TextView opPhone;
-        @BindView(R.id.person_status_val)
-        TextView opStatus;
+        @BindView(R.id.call_icon)
+        ImageView callIcon;
         @BindView(R.id.person_photo)
         ImageView opPhoto;
-        @BindView(R.id.status_icon)
-        ImageView opStatusIcon;
+        @BindView(R.id.chat_icon)
+        ImageView chatIcon;
 
         OperatorViewHolder(View itemView) {
             super(itemView);
