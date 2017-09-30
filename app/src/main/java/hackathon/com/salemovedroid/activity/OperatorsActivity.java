@@ -71,6 +71,7 @@ public class OperatorsActivity extends BaseActivity {
                         @Override
                         public void run() {
                             Log.i(TAG, "ok time");
+                            getOperators();
 
                         }
                     }, 0, 10, SECONDS);
@@ -82,6 +83,7 @@ public class OperatorsActivity extends BaseActivity {
             }, 60*60, SECONDS);
         }
     }
+
 
     private void onPermissionsGranted() {
 
