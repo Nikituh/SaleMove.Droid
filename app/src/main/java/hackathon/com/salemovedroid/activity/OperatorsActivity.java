@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.adapter.OperatorListAdapter;
 import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
+import hackathon.com.salemovedroid.networking.Socket;
 import hackathon.com.salemovedroid.utils.Utils;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -36,6 +38,8 @@ public class OperatorsActivity extends BaseActivity {
     static final String TAG = OperatorsActivity.class.getName();
 
     private Networking networking;
+    private Socket socket;
+
     private List<Operator> operators;
     private RecyclerView rv;
 
@@ -46,9 +50,10 @@ public class OperatorsActivity extends BaseActivity {
         setContentView(R.layout.layout_recycler_view);
         setupToolbar(getString(R.string.app_name));
 
-        operators = new ArrayList<>();
-
         networking = new Networking();
+        socket = new Socket();
+
+        operators = new ArrayList<>();
 
         rv = (RecyclerView) findViewById(R.id.main_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -66,6 +71,8 @@ public class OperatorsActivity extends BaseActivity {
         }
 
         getOperators();
+
+        socket.connect();
     }
 
     private void getOperators() {
