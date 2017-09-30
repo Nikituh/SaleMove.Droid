@@ -1,11 +1,11 @@
 package hackathon.com.salemovedroid.networking
 
-import com.github.nkzawa.engineio.client.Socket
 import com.github.nkzawa.socketio.client.IO
-import org.jetbrains.annotations.NotNull
 
 /**
- * Created by aareundo on 30/09/2017.
+ * WebSocket implementation is too much of a hassle for a 24-hour hackathon,
+ * opted for a WebView based solution.
+ * But theoretically a connection could be established with this socket.IO library
  */
 class Socket {
 
