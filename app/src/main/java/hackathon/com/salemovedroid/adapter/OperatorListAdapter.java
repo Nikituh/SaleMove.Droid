@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,7 +53,12 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         holder.opName.setText(operators.get(position).getName());
         holder.opStatus.setText(String.valueOf(status));
         holder.opPhone.setText(operators.get(position).getPhone());
-        holder.opPhoto.setImageDrawable(context.getDrawable(R.drawable.ic_action_name));
+        String imageUrl = operators.get(position).getImageUrl();
+        if (imageUrl.isEmpty()) {
+            holder.opPhoto.setImageDrawable(context.getDrawable(R.drawable.ic_action_name));
+        } else {
+            Picasso.with(context).load(imageUrl).into(holder.opPhoto);
+        }
         holder.context = context;
 
         if (status) {
@@ -59,7 +66,6 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         } else {
             holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));
         }
-  
     }
 
     @Override
