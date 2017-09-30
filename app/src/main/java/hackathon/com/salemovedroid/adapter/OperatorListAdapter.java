@@ -57,23 +57,15 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         if (status) {
             holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_available));
         } else {
-            double rnd = Math.random();
-            if (rnd > 0.5) {
-                holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));
-            } else {
-                holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_on_call));
-            }
+            holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));
         }
-
-        //TODO:onclickListener
-
+  
     }
 
     @Override
     public int getItemCount() {
         return operators.size();
     }
-
 
     public static class OperatorViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.operator_card_view)
