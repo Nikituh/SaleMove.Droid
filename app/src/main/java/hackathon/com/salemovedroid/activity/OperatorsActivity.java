@@ -11,6 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
 import hackathon.com.salemovedroid.networking.Socket;
 import hackathon.com.salemovedroid.utils.Utils;
+import hackathon.com.salemovedroid.views.MainView;
+import hackathon.com.salemovedroid.views.OperatorCell;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -46,13 +49,28 @@ public class OperatorsActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_recycler_view);
-        setupToolbar(getString(R.string.app_name));
+//        setContentView(R.layout.layout_recycler_view);
+//        setupToolbar(getString(R.string.app_name));
+
+        contentView = new MainView(this);
+        setContentView(contentView);
 
         if (ActivityCompat.checkSelfPermission(OperatorsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(OperatorsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
         } else {
             onPermissionsGranted();
+        }
+    }
+
+    MainView contentView;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        for (OperatorCell cell : contentView.getCells()) {
+            cell.getCall().setOnClickListener(null);
+            cell.getChat().setOnClickListener(null);
         }
     }
 
@@ -63,13 +81,13 @@ public class OperatorsActivity extends BaseActivity {
 
         operators = new ArrayList<>();
 
-        rv = (RecyclerView) findViewById(R.id.main_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rv.setLayoutManager(layoutManager);
-        rv.setItemAnimator(new DefaultItemAnimator());
-
-        OperatorListAdapter adapter = new OperatorListAdapter(this, operators);
-        rv.setAdapter(adapter);
+//        rv = (RecyclerView) findViewById(R.id.main_recycler_view);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        rv.setLayoutManager(layoutManager);
+//        rv.setItemAnimator(new DefaultItemAnimator());
+//
+//        OperatorListAdapter adapter = new OperatorListAdapter(this, operators);
+//        rv.setAdapter(adapter);
 
         try {
             String token = Utils.readFromAssets(getAssets(), "token.txt");
@@ -79,17 +97,44 @@ public class OperatorsActivity extends BaseActivity {
         }
 
         getOperators();
-
-        socket.connect();
-
     }
 
     private void getOperators() {
         networking.getOperators(new Function1<List<Operator>, Unit>() {
             @Override
-            public Unit invoke(List<Operator> operators) {
-                OperatorsActivity.this.operators.addAll(operators);
-                rv.getAdapter().notifyDataSetChanged();
+            public Unit invoke(final List<Operator> operators) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        MainView view = new MainView(OperatorsActivity.this);
+                        OperatorsActivity.this.setContentView(view);
+                        view.addOperators(operators);
+
+                        for (final OperatorCell cell : contentView.getCells()) {
+                            cell.getCall().setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startWebActivity();
+                                }
+                            });
+
+                            cell.getChat().setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String phone = cell.getOperator().getPhone();
+                                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null));
+                                    if (ActivityCompat.checkSelfPermission(OperatorsActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+
                 return Unit.INSTANCE;
             }
         });
