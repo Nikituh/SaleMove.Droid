@@ -11,7 +11,6 @@ class SaleMoveWebView(context: Context) : WebView(context) {
 
     init {
         settings.javaScriptEnabled = true
-        settings.pluginState = WebSettings.PluginState.ON
 
         val url = "http://rocktoriin.ee/salemove/"
         loadUrl(url)
