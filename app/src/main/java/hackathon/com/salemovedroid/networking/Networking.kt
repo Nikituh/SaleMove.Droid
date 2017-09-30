@@ -47,7 +47,6 @@ class Networking {
                 Log.e("qdp error", error.toString())
 
             })
-
         }
     }
 

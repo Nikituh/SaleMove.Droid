@@ -15,7 +15,7 @@ Build an interactive user interface in Android, implementing Salemove's API, whi
 
 Soon after we had started, it became apparent that SaleMove does not have a public API for their WebSocket solution, so for a while I tried to decode the crypic messages to write a solution from scratch, using an Android implementation of Socket.IO. But all that backfired in a tremendous way when by the end of Friday I still had no idea what the hell was going on. It was an ambitious task, and I admit defeat.
 
-The next-best thing was to create a WebView-based solution, so I threw together a small site with the help of [site_hosting_and_conf.md](https://gist.github.com/deiwin/a5d35325fa185863e7a30cea3b6cf093), implemented the SDK, asked the mentors for all the necessary access keys and hosted it on a server where our application could access it from.
+The next-best thing was to create a WebView-based solution, so I threw together a small site (available in the [/web](/web) folder) with the help of [site_hosting_and_conf.md](https://gist.github.com/deiwin/a5d35325fa185863e7a30cea3b6cf093), implemented the SDK, asked the mentors for all the necessary access keys and hosted it on a server where our application could access it from.
 
 Sounds great, right? Wrong. SaleMove's audio and video features require the use of https protocol... and I don't own any site with that license, so it had to be purely text-chat-based. Drats, foiled again.
 
