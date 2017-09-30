@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.model.Operator;
 
@@ -84,5 +85,10 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.operator_card_view)
+        public void loadOperatorView(CardView card) {
+            card.getRadius();
+                    }
     }
 }

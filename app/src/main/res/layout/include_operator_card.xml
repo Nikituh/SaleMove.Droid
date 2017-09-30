@@ -10,6 +10,7 @@
         android:id="@+id/operator_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:foreground="@drawable/pressed_foreground"
         android:layout_gravity="center"
         android:layout_margin="7dp"
         android:elevation="3dp"
