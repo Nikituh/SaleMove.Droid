@@ -43,5 +43,7 @@ public class BaseActivity extends AppCompatActivity {
         if (enableUpNavigation) {
             toolbar.setNavigationIcon(R.drawable.ic_action_name);
         }
+
     }
+
 }

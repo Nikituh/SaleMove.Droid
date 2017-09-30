@@ -6,9 +6,7 @@ package hackathon.com.salemovedroid.model;
 
 import java.util.List;
 
-
 public class MockOperator {
-
 
     private String href;
     private String id;
@@ -20,10 +18,7 @@ public class MockOperator {
     private List<Object> engagements = null;
     private List<Object> engagementRequests = null;
     private String role;
-    private MockPicture picture;
+    private int pictureId;
     private String phone;
     private String unavailabilityReason;
-
-
-
 }

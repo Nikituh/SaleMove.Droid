@@ -6,15 +6,21 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import hackathon.com.salemovedroid.R;
+import hackathon.com.salemovedroid.adapter.OperatorListAdapater;
+import hackathon.com.salemovedroid.model.MockOperator;
 import hackathon.com.salemovedroid.model.Operator;
 import hackathon.com.salemovedroid.networking.Networking;
 import kotlin.Unit;
@@ -27,14 +33,21 @@ import kotlin.jvm.functions.Function1;
 public class OperatorsActivity extends BaseActivity {
     static final String TAG = OperatorsActivity.class.getName();
     private Networking networking;
-
+    private List<Operator> operators;
+    private RecyclerView rv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_operatorlist);
+        setContentView(R.layout.layout_recycler_view);
         setupToolbar(getString(R.string.app_name));
         networking = new Networking();
+        rv=(RecyclerView)findViewById(R.id.main_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(layoutManager);
+        rv.setItemAnimator(new DefaultItemAnimator());
 
+        initializeData();
+        initializeAdapter();
         String token = "";
         try {
             token = readFromAssets("token.txt");
@@ -44,6 +57,60 @@ public class OperatorsActivity extends BaseActivity {
         }
        //startCall();
     }
+
+    private void initializeData(){
+        operators = new ArrayList<>();
+        Operator op1= new Operator();
+        op1.setName("Jon Snow");
+        op1.setPhone("+37253996694");
+        op1.setEmail("dreamcodesoft@gmail.com");
+
+        Operator op2= new Operator();
+        op2.setName("Anna");
+        op2.setPhone("+37253996694");
+        op2.setEmail("anna.bass@gmail.com");
+
+        Operator op3= new Operator();
+        op3.setName("Jhon");
+        op3.setPhone("+37253996694");
+        op3.setEmail("aare@gmail.com");
+
+        Operator op4= new Operator();
+        op4.setName("Uri");
+        op4.setPhone("+37253996694");
+        op4.setEmail("aare@gmail.com");
+
+        Operator op5= new Operator();
+        op5.setName("Aare");
+        op5.setPhone("+37253996694");
+        op5.setEmail("aare@gmail.com");
+
+        Operator op6= new Operator();
+        op6.setName("Sveta");
+        op6.setPhone("+37253996694");
+        op6.setEmail("aare@gmail.com");
+
+        Operator op7= new Operator();
+        op6.setName("Sven");
+        op6.setPhone("+37253996694");
+        op6.setEmail("aare@gmail.com");
+        operators.add(op1);
+        operators.add(op2);
+        operators.add(op3);
+        operators.add(op4);
+        operators.add(op5);
+        operators.add(op6);
+        operators.add(op7);
+
+         }
+
+    private void initializeAdapter(){
+        OperatorListAdapater operatorListAdapater = new OperatorListAdapater(this,operators);
+        rv.setAdapter(operatorListAdapater);
+    }
+
+
+
     //TODO:Move startcall into the adapter onClick logic
     private void startCall() {
         networking.getOperators(new Function1<List<Operator>, Unit>() {

@@ -27,7 +27,7 @@ class Codec {
             result.name = json["name"] as String
             result.email = json["email"] as String
             result.phone = json["phone"] as String
-            result.available = json["available"] as Boolean
+            result.status = json["status"] as Boolean
 
             try {
                 val picture = json["picture"] as JSONObject
