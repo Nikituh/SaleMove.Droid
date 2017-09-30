@@ -1,8 +1,10 @@
 package hackathon.com.salemovedroid.activity;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -118,7 +120,17 @@ public class OperatorsActivity extends BaseActivity {
     }
 
     public void startWebActivity() {
-        Intent intent = new Intent(this, WebActivity.class);
-        startActivity(intent);
+
+        String url = "http://rocktoriin.ee/salemove";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage("com.android.chrome");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            // Chrome browser presumably not installed so allow user to choose instead
+            intent.setPackage(null);
+            startActivity(intent);
+        }
     }
 }
