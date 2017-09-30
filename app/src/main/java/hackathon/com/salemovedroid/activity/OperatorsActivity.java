@@ -74,6 +74,7 @@ public class OperatorsActivity extends BaseActivity {
         op3.setName("Jhon");
         op3.setPhone("+37253996694");
         op3.setEmail("aare@gmail.com");
+        op3.setStatus(true);
 
         Operator op4= new Operator();
         op4.setName("Uri");
@@ -91,9 +92,9 @@ public class OperatorsActivity extends BaseActivity {
         op6.setEmail("aare@gmail.com");
 
         Operator op7= new Operator();
-        op6.setName("Sven");
-        op6.setPhone("+37253996694");
-        op6.setEmail("aare@gmail.com");
+        op7.setName("Sven");
+        op7.setPhone("+37253996694");
+        op7.setEmail("aare@gmail.com");
         operators.add(op1);
         operators.add(op2);
         operators.add(op3);

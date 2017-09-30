@@ -43,9 +43,22 @@ public class OperatorListAdapater extends RecyclerView.Adapter<OperatorListAdapa
 
     public void onBindViewHolder(OperatorViewHolder holder, int position) {
         holder.opName.setText(operators.get(position).getName());
-        holder.opEmail.setText(String.valueOf(operators.get(position).getStatus()));
-        holder.opPhone.setText(operators.get(position).getName());
+        boolean status = operators.get(position).getStatus();
+        holder.opStatus.setText(String.valueOf(status));
+        holder.opPhone.setText(operators.get(position).getPhone());
         holder.opPhoto.setImageDrawable(context.getDrawable(R.drawable.ic_action_name));
+
+
+        if(status){
+            holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_available));
+        }
+        else{
+            double rnd=Math.random();
+            if(rnd>0.5){holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_off));}
+            else{holder.opStatusIcon.setImageDrawable(context.getDrawable(R.drawable.ic_operator_status_on_call));}
+
+        }
+
 
         //TODO:onclickListener
 
@@ -60,19 +73,20 @@ public class OperatorListAdapater extends RecyclerView.Adapter<OperatorListAdapa
     public static class OperatorViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView opName;
-        TextView opEmail;
+        //TextView opEmail;
         TextView opPhone;
-        TextView opAvailable;
+        TextView opStatus;
         ImageView opPhoto;
+        ImageView opStatusIcon;
 
         OperatorViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.operator_card_view);
             opName = (TextView) itemView.findViewById(R.id.person_name_val);
-            opEmail = (TextView) itemView.findViewById(R.id.person_email_val);
             opPhone = (TextView) itemView.findViewById(R.id.person_phone_val);
             opPhoto = (ImageView) itemView.findViewById(R.id.person_photo);
-            opAvailable=(TextView) itemView.findViewById(R.id.person_email_val);
+            opStatusIcon = (ImageView) itemView.findViewById(R.id.status_icon);
+            opStatus = (TextView) itemView.findViewById(R.id.person_status_val);
         }
     }
 }
