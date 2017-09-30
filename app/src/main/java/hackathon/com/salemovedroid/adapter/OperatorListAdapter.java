@@ -108,7 +108,6 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 context.startActivity(intent);
             }
-
         }
     }
 }
