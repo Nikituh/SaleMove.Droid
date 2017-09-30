@@ -1,11 +1,15 @@
 package hackathon.com.salemovedroid.activity;
 
 import android.Manifest;
+import android.app.IntentService;
+import android.app.Service;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +19,11 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 
 import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.adapter.OperatorListAdapter;
@@ -24,6 +33,7 @@ import hackathon.com.salemovedroid.networking.Socket;
 import hackathon.com.salemovedroid.utils.Utils;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Created by John on 9/29/2017.
@@ -41,6 +51,9 @@ public class OperatorsActivity extends BaseActivity {
 
     private List<Operator> operators;
     private RecyclerView rv;
+    private OperatorListAdapter listAdapter;
+    private ScheduledExecutorService scheduler =
+            Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,20 @@ public class OperatorsActivity extends BaseActivity {
             ActivityCompat.requestPermissions(OperatorsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
         } else {
             onPermissionsGranted();
+            final ScheduledFuture<?> timeHandle =
+                    scheduler.scheduleAtFixedRate(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "ok time");
+
+                        }
+                    }, 0, 10, SECONDS);
+            // Schedule the event, and run for 1 hour (60 * 60 seconds)
+            scheduler.schedule(new Runnable() {
+                public void run() {
+                    timeHandle.cancel(false);
+                }
+            }, 60*60, SECONDS);
         }
     }
 
@@ -68,8 +95,8 @@ public class OperatorsActivity extends BaseActivity {
         rv.setLayoutManager(layoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
 
-        OperatorListAdapter adapter = new OperatorListAdapter(this, operators);
-        rv.setAdapter(adapter);
+        listAdapter = new OperatorListAdapter(this, operators);
+        rv.setAdapter(listAdapter);
 
         try {
             String token = Utils.readFromAssets(getAssets(), "token.txt");
@@ -77,19 +104,15 @@ public class OperatorsActivity extends BaseActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         getOperators();
-
         socket.connect();
-
     }
 
-    private void getOperators() {
+    public void getOperators() {
         networking.getOperators(new Function1<List<Operator>, Unit>() {
             @Override
             public Unit invoke(List<Operator> operators) {
-                OperatorsActivity.this.operators.addAll(operators);
-                rv.getAdapter().notifyDataSetChanged();
+                listAdapter.updateAdapter(operators);
                 return Unit.INSTANCE;
             }
         });
@@ -114,7 +137,7 @@ public class OperatorsActivity extends BaseActivity {
         if (requestCode == REQUEST_CALLING) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                Log.i("OK", "ok");
+                Log.i(TAG, "ok");
             }
         }
     }
@@ -133,4 +156,5 @@ public class OperatorsActivity extends BaseActivity {
             startActivity(intent);
         }
     }
+
 }

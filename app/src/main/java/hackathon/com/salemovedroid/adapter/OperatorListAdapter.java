@@ -73,6 +73,12 @@ public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapte
         return operators.size();
     }
 
+    public void updateAdapter(List<Operator> updatedOperators) {
+        operators.clear();
+        operators.addAll(updatedOperators);
+        notifyDataSetChanged();
+    }
+
     public static class OperatorViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.operator_card_view)
         CardView cv;
