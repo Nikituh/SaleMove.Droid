@@ -21,13 +21,13 @@ import hackathon.com.salemovedroid.R;
 import hackathon.com.salemovedroid.model.Operator;
 
 
-public class OperatorListAdapater extends RecyclerView.Adapter<OperatorListAdapater.OperatorViewHolder> {
+public class OperatorListAdapter extends RecyclerView.Adapter<OperatorListAdapter.OperatorViewHolder> {
 
     private final Context context;
     private LayoutInflater inflater;
     List<Operator> operators;
 
-    public OperatorListAdapater(Context context, List<Operator> operators) {
+    public OperatorListAdapter(Context context, List<Operator> operators) {
         this.operators = operators;
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
